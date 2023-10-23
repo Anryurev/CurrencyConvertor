@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.bignerdranch.android.currencyconvertor"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.bignerdranch.android.currencyconvertor"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
