@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CurrencyConvertor</string>
+    <string name="price_str">Цена:</string>
+    <string name="result_text">Результат</string>
 </resources>

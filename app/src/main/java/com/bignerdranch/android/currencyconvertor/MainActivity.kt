@@ -6,15 +6,14 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.SeekBar
 import android.widget.TextView
-import java.math.RoundingMode
-import java.text.DecimalFormat
 
 class MainActivity : AppCompatActivity() {
     private lateinit var saleSeekBar:SeekBar
     private lateinit var seekTextView:TextView
-    private lateinit var resTextView:TextView
+    private lateinit var radioGroup:RadioGroup
     private lateinit var enterTextView:EditText
     private lateinit var calcButton: Button
     private lateinit var dollarRadioButton: RadioButton
@@ -27,8 +26,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         saleSeekBar = findViewById(R.id.sale_seekBar)
         seekTextView = findViewById(R.id.seek_textView)
-        resTextView = findViewById(R.id.res_textView)
         enterTextView = findViewById(R.id.enter_editText)
+        radioGroup = findViewById(R.id.radio_group)
         calcButton = findViewById(R.id.calc_button)
         dollarRadioButton = findViewById(R.id.dollar_radioButton)
         euroRadioButton = findViewById(R.id.euro_radioButton)
@@ -45,7 +44,16 @@ class MainActivity : AppCompatActivity() {
 
             }
         })
-        calcButton.setOnClickListener{
+
+        radioGroup.setOnCheckedChangeListener{ _, checkedId ->
+            if (enterTextView.text.length > 0){
+                calcButton.isEnabled=true
+            }
+        }
+
+        fun getPrice() {
+            val intent = Intent(this,ActivityTwo::class.java)
+
             if (dollarRadioButton.isChecked){
                 price = enterTextView.text.toString().toDouble()/(75.0 * sale)
             }
@@ -56,10 +64,13 @@ class MainActivity : AppCompatActivity() {
                 price = enterTextView.text.toString().toDouble()/(100.0 * sale)
             }
 
-            val intent = Intent(this@MainActivity, ActivityTwo:: class.java)
-            intent.putExtra("Price", price)
+            intent.putExtra(ActivityTwo.TOTAL_COUNT, price)
 
             startActivity(intent)
+        }
+
+        calcButton.setOnClickListener{
+            getPrice()
         }
     }
 }
